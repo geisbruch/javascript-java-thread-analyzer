@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- jquery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+		<!-- Thread Analyzer -->
+		<script src="/dist/js/java-thread-analyzer.js"></script>
+
+		
+	</head>
+	<body>
+			<div class="container-fluid">
+			<div id="dump" class="row">
+				<div class="row">
+					<div clas="col-md-4">
+						<textarea id="dump-text" class="form-control" rows="4" cols="50">
+	Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.65-b01 mixed mode):
+
+	"Attach Listener" #12 daemon prio=9 os_prio=31 tid=0x00007fb314058800 nid=0x4f03 waiting on condition [0x0000000000000000]
+	   java.lang.Thread.State: RUNNABLE
+
+	"DestroyJavaVM" #11 prio=5 os_prio=31 tid=0x00007fb315850000 nid=0x1303 waiting on condition [0x0000000000000000]
+	   java.lang.Thread.State: RUNNABLE
+
+	"Thread-1" #10 prio=5 os_prio=31 tid=0x00007fb31509a800 nid=0x4d03 waiting for monitor entry [0x0000000122b39000]
+	   java.lang.Thread.State: BLOCKED (on object monitor)
+		at DeadLock$ThreadDemo2.run(DeadLock.java:34)
+		- waiting to lock <0x000000076abbf6a8> (a java.lang.Object)
+		- locked <0x000000076abbf6b8> (a java.lang.Object)
+
+	"Thread-0" #9 prio=5 os_prio=31 tid=0x00007fb31584f000 nid=0x4b03 waiting for monitor entry [0x0000000122a36000]
+	   java.lang.Thread.State: BLOCKED (on object monitor)
+		at DeadLock$ThreadDemo1.run(DeadLock.java:21)
+		- waiting to lock <0x000000076abbf6b8> (a java.lang.Object)
+		- locked <0x000000076abbf6a8> (a java.lang.Object)
+
+	"Service Thread" #8 daemon prio=9 os_prio=31 tid=0x00007fb31506c800 nid=0x4703 runnable [0x0000000000000000]
+	   java.lang.Thread.State: RUNNABLE
+
+	"C1 CompilerThread2" #7 daemon prio=9 os_prio=31 tid=0x00007fb315031800 nid=0x4503 waiting on condition [0x0000000000000000]
+	   java.lang.Thread.State: RUNNABLE
+
+	"C2 CompilerThread1" #6 daemon prio=9 os_prio=31 tid=0x00007fb314816800 nid=0x4303 waiting on condition [0x0000000000000000]
+	   java.lang.Thread.State: RUNNABLE
+
+	"C2 CompilerThread0" #5 daemon prio=9 os_prio=31 tid=0x00007fb314815000 nid=0x4103 waiting on condition [0x0000000000000000]
+	   java.lang.Thread.State: RUNNABLE
+
+	"Signal Dispatcher" #4 daemon prio=9 os_prio=31 tid=0x00007fb315030800 nid=0x4013 runnable [0x0000000000000000]
+	   java.lang.Thread.State: RUNNABLE
+
+	"Finalizer" #3 daemon prio=8 os_prio=31 tid=0x00007fb315029800 nid=0x2d03 in Object.wait() [0x00000001209d3000]
+	   java.lang.Thread.State: WAITING (on object monitor)
+		at java.lang.Object.wait(Native Method)
+		- waiting on <0x000000076ab070b8> (a java.lang.ref.ReferenceQueue$Lock)
+		at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:143)
+		- locked <0x000000076ab070b8> (a java.lang.ref.ReferenceQueue$Lock)
+		at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:164)
+		at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:209)
+
+	"Reference Handler" #2 daemon prio=10 os_prio=31 tid=0x00007fb314010000 nid=0x2b03 in Object.wait() [0x00000001208d0000]
+	   java.lang.Thread.State: WAITING (on object monitor)
+		at java.lang.Object.wait(Native Method)
+		- waiting on <0x000000076ab06af8> (a java.lang.ref.Reference$Lock)
+		at java.lang.Object.wait(Object.java:502)
+		at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:157)
+		- locked <0x000000076ab06af8> (a java.lang.ref.Reference$Lock)
+
+	"VM Thread" os_prio=31 tid=0x00007fb315028800 nid=0x2903 runnable 
+
+	"GC task thread#0 (ParallelGC)" os_prio=31 tid=0x00007fb31500d800 nid=0x2103 runnable 
+
+	"GC task thread#1 (ParallelGC)" os_prio=31 tid=0x00007fb31400d800 nid=0x2303 runnable 
+
+	"GC task thread#2 (ParallelGC)" os_prio=31 tid=0x00007fb314802000 nid=0x2503 runnable 
+
+	"GC task thread#3 (ParallelGC)" os_prio=31 tid=0x00007fb314803000 nid=0x2703 runnable 
+
+	"VM Periodic Task Thread" os_prio=31 tid=0x00007fb314038000 nid=0x4903 waiting on condition 
+
+	JNI global references: 6
+						</textarea>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<button value="analyze" class="btn btn-default" onclick='javscript:JavaTDA.render($("#dump-text").val(),$("#main"),{status:{},stack:{},raw:{}})'>analyze</button>
+					</div>
+				</div>
+			</div>
+			<div id="main" class="row"></div>		
+		</div>
+		
+		<script src="/browser/thread_dump_render.js"></script>
+	</body>
+</html>

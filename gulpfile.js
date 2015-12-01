@@ -10,7 +10,7 @@ var gutil = require('gulp-util');
 gulp.task('build', function () {
   // set up the browserify instance on a task basis
   var b = browserify({
-    entries: './main.js',
+    entries: './elements.js',
     debug: true
   });
 
@@ -18,7 +18,9 @@ gulp.task('build', function () {
     .pipe(source('java-thread-analyzer.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true}))
-    .pipe(gulp.dest('./dist/js/'));
         // Add transformation tasks to the pipeline here.
-        
+        .pipe(uglify())
+        .on('error', gutil.log)
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('./dist/js/'));
 });
