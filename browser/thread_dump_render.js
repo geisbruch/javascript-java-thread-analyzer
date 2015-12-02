@@ -7,7 +7,7 @@ var states = [ {state: "NEW", classType:"label-default"},
 
 function TDARender(dumpRaw, div, options) {
 	var dump = new DumpAnalyzer(dumpRaw,options);	
-	var str = '<div class="row"><div style="margin-top:15px;" class="">'
+	var str = '<div class="">'
 	var content="<div class='tab-content'>" ;
 	var headers='<ul class="nav nav-tabs" id="tda_status_tabs" role="tablist">';
 	var active = true;
@@ -23,14 +23,14 @@ function TDARender(dumpRaw, div, options) {
 	}
 	if(options["raw"]) {
 		headers+=makeTab("tda_dump_raw","Raw", active);
-		content+=makeTabContent('<pre>'+dumpRaw+'</pre>',"tda_dump_raw",active);
+		content+=makeTabContent('<pre style="height:450px;">'+dumpRaw+'</pre>',"tda_dump_raw",active);
 		active = false;
 	}
 	headers+='</ul>';
 	str+=makeDiv(headers, "tda_headers");	
 	content+="</div>"
 	str+=content;
-	str+='</div></div>'
+	str+='</div>'
 	div.html(str);	
 
 	//Status tabs actions
@@ -59,8 +59,8 @@ function makeStack(dump, options) {
 		$(bar).appendTo(content);
 		var contentStr='<div id="'+stid+'" style="background:'+selectBackGroundFromDumpNode(e.node)+';">'
 						+(hasChildren? '<a style="padding-right:5px;"'
-						+'onclick="javascript:hideOrUnUnhide(this,\'#'+stid+'-children\')">(+)</a>':"")
-						+e.node.name+'<progress  class="progress-striped active" '
+						+'onclick="javascript:hideOrUnUnhide(this,\'#'+stid+'-children\')"><i class="glyphicon glyphicon-plus-sign"></i></a>':"")
+						+e.node.name+'<progress  class="pull-right progress-striped active" '
 						+'max="'+total+'" value="'+e.node.total+'">'+'</progress>('+e.node.total+'/'+total+')</div>';
 		/*var contentStr = '<div class="progress">'
 							+'<div class="progress-bar"'
@@ -95,10 +95,10 @@ function selectBackGroundFromDumpNode(node) {
 
 function hideOrUnUnhide(origin, div) {
 	if($(div).css('display') == 'none') {
-		$(origin).html("(-)");
+		$(origin).html("<i class='glyphicon glyphicon-minus-sign'></i>");
 		$(div).show();
 	} else {
-		$(origin).html("(+)");
+		$(origin).html("<i class='glyphicon glyphicon-plus-sign'></i>");
 		$(div).hide();
 	}
 	return false;
@@ -129,18 +129,18 @@ function makeDiv(contentstr, idStr) {
 
 function makeStatus(dump, options) {
 	var str = ''
-	str+='<div style=""><a href="#">Threads <div class="badge">'+dump.total_threads+'</div></a></div>'
+	str+='<div class="row jstackrow"><div class="col-md-11 jstack">Threads TOTAL </div><div class="col-md-1"><a><div class="label label-default label-as-badge">'+dump.total_threads+'</div></a></div></div>'
 	for(var i = 0; i<states.length; i++) {
 		var stateConf = states[i];
 		var st = dump.thread_states[stateConf.state];
 		st = st? st : 0;
-		str+='<div class="row"><div class="col-md-2"><a href="#">Threads in <b>'
+		str+='<div class="row jstackrow"><div class="col-md-11 jstack"><a>Threads in <b>'
 			+stateConf.state
-			+'</b></div> <div class="label '
+			+'</b></div><div class="col-md-1"><a><div class="label '
 			+stateConf.classType
 			+' label-as-badge">'
 			+ st
-			+'</div></a></div>';
+			+'</div></a></div></div>';
 	}
 	str+=""
 	return str;
