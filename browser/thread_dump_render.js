@@ -27,7 +27,7 @@ TDARender.prototype.redraw = function() {
 		active = active || this.active_tab == "status";
 		headers+=makeTab("tda_status","Status",active);
 		content+=makeTabContent(makeStatus(this.dump,this.options["status"]),"tda_status",active)
-		active = false;
+		active = false;	
 	}
 	if(this.options["stack"]) {
 		active = active || this.active_tab == "stack";
@@ -58,11 +58,11 @@ TDARender.prototype.redraw = function() {
 
 
 function makeStack(dump, options) {
-	var total = dump.stackAnalyzer.total;
+	var total = dump.stack_analyzer.total;
 	var mainDiv=$("<div>")[0]
 	var toAdd = [];
 	var stid=0;
-	sortStackChildren(dump.stackAnalyzer.children).forEach(function(e) {
+	sortStackChildren(dump.stack_analyzer.children).forEach(function(e) {
 		toAdd.push({node: e, div: mainDiv, level:0});
 	})
 
