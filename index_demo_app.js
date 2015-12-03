@@ -5,4 +5,8 @@ app.use('/browser', express.static('browser'));
 app.use('/dist/js', express.static('dist/js'));
 app.use('/static', express.static('static'));
 
-app.listen(3000);
+app.get("/",function(req, res) {
+  res.redirect('/static/index.html');  
+});
+
+app.listen((process.env.PORT || 3000));
