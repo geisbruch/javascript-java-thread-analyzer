@@ -2,7 +2,7 @@
   "name": "javascript-java-thread-analyzer",
   "version": "0.0.1",
   "description": "It's thread analizer to be used in javascript",
-  "main": "index.js",
+  "main": "index_demo_app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
