@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "domready": "^1.0.8",
+    "express": "^4.13.3",
     "xregexp": "^3.0.0"
   },
   "devDependencies": {
