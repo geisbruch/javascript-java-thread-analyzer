@@ -6,24 +6,39 @@ var states = [ {state: "NEW", classType:"label-default"},
 			   {state: "TERMINATED", classType:"label-success"}];
 
 function TDARender(dumpRaw, div, options) {
-	var dump = new DumpAnalyzer(dumpRaw,options);	
+	this.options = options || {};
+	this.dumpRaw = dumpRaw;
+	this.div = div;
+	this.dump = new DumpAnalyzer(dumpRaw,options);
+	this.active_tab = "";	
+}
+TDARender.prototype.filter = function(filters) {
+	this.dump.filter(filters);
+	this.redraw();
+}
+TDARender.prototype.redraw = function() {
+	var self = this;
 	var str = '<div class="">'
 	var content="<div class='tab-content'>" ;
 	var headers='<ul class="nav nav-tabs" id="tda_status_tabs" role="tablist">';
-	var active = true;
-	if(options["status"]) {
+	//If is not set then true
+	var active =  !this.active_tab || this.active_tab == "";
+	if(this.options["status"]) {
+		active = active || this.active_tab == "status";
 		headers+=makeTab("tda_status","Status",active);
-		content+=makeTabContent(makeStatus(dump,options["status"]),"tda_status",active)
+		content+=makeTabContent(makeStatus(this.dump,this.options["status"]),"tda_status",active)
 		active = false;
 	}
-	if(options["stack"]) {
+	if(this.options["stack"]) {
+		active = active || this.active_tab == "stack";
 		headers+=makeTab("tda_stack","Stack",active);
-		content+=makeTabContent(makeStack(dump,options["stack"]),"tda_stack",active)
+		content+=makeTabContent(makeStack(this.dump,this.options["stack"]),"tda_stack",active)
 		active = false;
 	}
-	if(options["raw"]) {
+	if(this.options["raw"]) {
+		active = active || this.active_tab == "raw";
 		headers+=makeTab("tda_dump_raw","Raw", active);
-		content+=makeTabContent('<pre style="height:450px;">'+dumpRaw+'</pre>',"tda_dump_raw",active);
+		content+=makeTabContent('<pre style="height:450px;">'+this.dumpRaw+'</pre>',"tda_dump_raw",active);
 		active = false;
 	}
 	headers+='</ul>';
@@ -31,11 +46,12 @@ function TDARender(dumpRaw, div, options) {
 	content+="</div>"
 	str+=content;
 	str+='</div>'
-	div.html(str);	
+	this.div.html(str);	
 
 	//Status tabs actions
 	$('#tda_status_tabs a').click(function (e) {
 	  e.preventDefault()
+	  self.active_tab = e.target.id.replace(/-tab$/,"").replace(/^tda_/,"");
 	  $(this).tab('show')
 	})
 }
@@ -84,7 +100,6 @@ function makeStack(dump, options) {
 }
 
 function selectBackGroundFromDumpNode(node) {
-	console.log(node.states);
 	if(node.states.BLOCKED && node.states.BLOCKED>0) {
 		return "rgba(198, 44, 44, 0.5)";
 	}else if(node.states.WAITING && node.states.WAITING>0) {
@@ -149,5 +164,5 @@ function makeStatus(dump, options) {
 
 
 var JavaTDA = {
-	render: TDARender
+	TDARender: TDARender
 }

@@ -93,7 +93,15 @@
 				</div>
 				<div class="row">
 					<div class="col-md-4">
-						<button value="analyze" class="btn btn-default" onclick='javscript:JavaTDA.render($("#dump-text").val(),$("#main"),{status:{},stack:{},raw:{}})'>analyze</button>
+						<button value="analyze" class="btn btn-default" onclick='javscript:analyze()'>analyze</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<input id="filter_text" value=".*"/>
+					</div>
+					<div class="col-md-4">						
+						<button value="filter" class="btn btn-default" onclick='javscript:filter()'>analyze</button>
 					</div>
 				</div>
 			</div>
@@ -101,5 +109,17 @@
 		</div>
 		
 		<script src="/browser/thread_dump_render.js"></script>
+		<script>
+			var dump
+			function analyze() {
+
+				dump = new JavaTDA.TDARender($("#dump-text").val(),$("#main"),{status:{},stack:{},raw:{}});
+				console.log(dump)
+				dump.redraw();
+			}
+			function filter() {
+				dump.filter([$("#filter_text").val()])
+			}
+		</script>
 	</body>
 </html>
