@@ -156,7 +156,6 @@ function makeStatus(dump, options) {
 		var stCount = st? st.count : 0;
 		var subData = '<div class="row sub-state">';
 		if(st){
-			console.log(st)
 			var subDataKeys = Object.keys(st.status)
 			for(var j = 0; j<subDataKeys.length; j++) {
 				var k = subDataKeys[j];
