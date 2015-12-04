@@ -18,7 +18,7 @@ TDARender.prototype.filter = function(filters) {
 }
 TDARender.prototype.redraw = function() {
 	var self = this;
-	var str = '<div class="">'
+	var str = ''
 	var content="<div class='tab-content'>" ;
 	var headers='<ul class="nav nav-tabs" id="tda_status_tabs" role="tablist">';
 	//If is not set then true
@@ -144,23 +144,51 @@ function makeDiv(contentstr, idStr) {
 
 function makeStatus(dump, options) {
 	var str = ''
-	str+='<div class="row jstackrow"><div class="col-md-11 jstack">Threads TOTAL </div><div class="col-md-1"><a><div class="label label-default label-as-badge">'+dump.total_threads+'</div></a></div></div>'
+	str+='<div class="row jstackrow">'
+			+'<div class="row jstackrow">'
+			+'<div class="col-md-11 jstack"><b>Threads TOTAL</b> </div>'
+			+'<div class="col-md-1"><div class="label label-default label-as-badge">'+dump.total_threads+'</div></div>'
+		+'</div></div><hr/>'
+	str+='<div class="row" id="thread_status">'
 	for(var i = 0; i<states.length; i++) {
 		var stateConf = states[i];
 		var st = dump.thread_states[stateConf.state];
-		st = st? st : 0;
+		var stCount = st? st.count : 0;
+		var subData = '<div class="row sub-state">';
+		if(st){
+			console.log(st)
+			var subDataKeys = Object.keys(st.status)
+			for(var j = 0; j<subDataKeys.length; j++) {
+				var k = subDataKeys[j];
+				subData+='<div class="row jstackrow">'
+					   +'<div class="col-md-1"></div><div class="col-md-9 jstack"><a>'+k+'</div>'
+					   +'<div class="col-md-1" style="margin-left:2.5em;"><a><div class="label '
+							+stateConf.classType
+						+' label-as-badge">'
+						+ st.status[k]
+						+'</div></a></div></div>';
+			}
+		}
+		subData+="</div>"
 		str+='<div class="row jstackrow"><div class="col-md-11 jstack"><a>Threads in <b>'
 			+stateConf.state
 			+'</b></div><div class="col-md-1"><a><div class="label '
 			+stateConf.classType
 			+' label-as-badge">'
-			+ st
-			+'</div></a></div></div>';
+			+ stCount	
+			+'</div></a></div>'
+			+'</div>'
+			+'<div class="row">'+subData+'</div><hr style="margin-top:5px;margin-bottom:5px;"/>';
 	}
-	str+=""
+	str+="</div>"
+	
 	return str;
 }
 
+function showOnRadio(toShow, toHide) {
+	$(toShow).show();
+	$(toHide).hide();
+}
 
 
 var JavaTDA = {
