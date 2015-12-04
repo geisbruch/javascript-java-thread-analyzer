@@ -38,7 +38,7 @@ TDARender.prototype.redraw = function() {
 	if(this.options["raw"]) {
 		active = active || this.active_tab == "raw";
 		headers+=makeTab("tda_dump_raw","Raw", active);
-		content+=makeTabContent(makeRaw(dump),"tda_dump_raw",active);
+		content+=makeTabContent(makeRaw(this.dump),"tda_dump_raw",active);
 		active = false;
 	}
 	headers+='</ul>';
@@ -57,16 +57,16 @@ TDARender.prototype.redraw = function() {
 }
 
 
-function makeRaw(tdaRender) {
-	var raw = tdaRender.dump.dump;
-	tdaRender.dump.thread_analyzers.forEach(function(t) {
+function makeRaw(threadDump) {
+	var raw = threadDump.dump;
+	threadDump.thread_analyzers.forEach(function(t) {
 		raw = raw.replace(new RegExp(t.id,"gi"),'<a href="#tid_'+t.id+'" name="tid_'+t.id+'">'+t.id+'</a>');
 		raw = raw.replace(new RegExp(t.name,"gi"),'<b>'+t.name+'</b>');
 		t.locked_objects.forEach(function(lo){
 			raw = raw.replace(new RegExp(lo,"gi"),'<a href="#tid_'+t.id+'">'+lo+'</a>');
 		});
 	});
-	return '<pre style="height:450px;">'+raw+'<a href="google.com">dsadasdas</a>'+'</pre>'
+	return '<pre style="height:450px;">'+raw+'</pre>'
 }
 
 function makeStack(dump, options) {
