@@ -56,7 +56,6 @@ TDARender.prototype.redraw = function() {
 	})
 }
 
-
 function makeRaw(threadDump) {
 	var raw = threadDump.dump;
 	threadDump.thread_analyzers.forEach(function(t) {
