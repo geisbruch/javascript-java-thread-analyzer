@@ -5,8 +5,12 @@ app.use('/browser', express.static('browser'));
 app.use('/dist/js', express.static('dist/js'));
 app.use('/static', express.static('static'));
 
+app.get("/robots.txt",function(req, res) {
+  res.sendFile(__dirname+'/static/robots.txt');  
+});
+
 app.get("/",function(req, res) {
-  res.redirect('/static/index.html');  
+  res.sendFile(__dirname+'/static/index.html');  
 });
 
 app.listen((process.env.PORT || 3000));
