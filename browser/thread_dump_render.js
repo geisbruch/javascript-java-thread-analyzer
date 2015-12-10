@@ -60,10 +60,10 @@ TDARender.prototype.redraw = function() {
 function makeRaw(threadDump) {
     var raw = threadDump.dump;
     threadDump.thread_analyzers.forEach(function(t) {
-        raw = raw.replace(new RegExp(t.id,"gi"),'<a href="#tid_'+t.id+'" name="tid_'+t.id+'">'+t.id+'</a>');
+        raw = raw.replace(new RegExp(t.id,"gi"),'<a href="#tid_'+t.id+'" class="thread_id" id="tid_'+t.id+'">'+t.id+'</a>');
         raw = raw.replace(new RegExp(t.name,"gi"),'<b>'+t.name+'</b>');
         t.locked_objects.forEach(function(lo){
-            raw = raw.replace(new RegExp(lo,"gi"),'<a href="#tid_'+t.id+'">'+lo+'</a>');
+            raw = raw.replace(new RegExp(lo,"gi"),'<a href="#tid_'+t.id+'" class="thread_id">'+lo+'</a>');
         });
     });
     return '<pre style="height:450px;">'+raw+'</pre>'
@@ -71,7 +71,7 @@ function makeRaw(threadDump) {
 
 function makeStack(dump, options) {
     var total = dump.stack_analyzer.total;
-    var mainDiv=$("<div>")[0]
+    var mainDiv=$('<div>')[0]
     var toAdd = [];
     var stid=0;
     sortStackChildren(dump.stack_analyzer.children).forEach(function(e) {
@@ -164,7 +164,7 @@ function makeStatus(dump, options) {
     str+='<div class="row jstackrow">'
     +'<div class="row jstackrow">'
     +'<div class="col-md-11 jstack"><b>Threads TOTAL</b> </div>'
-    +'<div class="col-md-1" style="text-align: right; padding-right: 3%"><div class="label label-default label-as-badge">'+dump.total_threads+'</div></div>'
+    +'<div class="col-md-1" style="text-align: right; padding-right: 3%"><div class="label label-default label-as-badge" style="padding-left: 10px; padding-right: 10px; border-radius: 0em;">'+dump.total_threads+'</div></div>'
     +'</div></div><hr style="margin-top:5px;margin-bottom:5px;"/>'
     str+='<div class="row" id="thread_status">'
     for(var i = 0; i<states.length; i++) {
@@ -182,7 +182,7 @@ function makeStatus(dump, options) {
                             '<a>' + k + '</a>' +
                         '</div>' +
                         '<div class="col-md-2" style="text-align: right; padding-right: 9%">' +
-                            '<a><div class="label ' + stateConf.classType + ' label-as-badge">' + st.status[k] + '</div></a>' +
+                            '<a><div class="label ' + stateConf.classType + ' label-as-badge" style="padding-left: 10px; padding-right: 10px; border-radius: 0em;">' + st.status[k] + '</div></a>' +
                         '</div>' +
                     '</div>'
             }
@@ -194,7 +194,7 @@ function makeStatus(dump, options) {
                     '<a>Threads in <b>' + stateConf.state + '</b></a>' +
                 '</div>' +
                 '<div class="col-md-1">' +
-                    '<a><div class="label ' + stateConf.classType + ' label-as-badge">' + stCount + '</div></a>' +
+                    '<a><div class="label ' + stateConf.classType + ' label-as-badge" style="padding-left: 10px; padding-right: 10px; border-radius: 0em;">' + stCount + '</div></a>' +
                 '</div>' +
             '</div>' +
             '<div class="row">'+subData+'</div><hr style="margin-top:5px;margin-bottom:5px;"/>';
