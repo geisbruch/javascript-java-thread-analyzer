@@ -89,14 +89,10 @@ function makeStack(dump, options) {
             +(hasChildren? '<a style="padding-right:5px;"'
             +'onclick="javascript:hideOrUnUnhide(this,\'#'+stid+'-children\')"><i class="glyphicon glyphicon-plus-sign"></i></a>':"")
             +e.node.name +
-            '<div class="progress pull-right" style="height: 17px; width: 180px;">' +
-                '<div class="bar" style="width: '+(e.node.total/total*100)+'%; height: 20px"></div>' +
-                '<span style="font-size: 13px; line-height: 0.7;">'+e.node.total+'/'+total+'</span>' +
+            '<div class="progress custom-progress pull-right" style="height: 17px; width: 180px;">' +
+                '<div class="bar custom-bar" style="width: '+(e.node.total/total*100)+'%; height: 20px"></div>' +
+                '<span class="custom-span" style="font-size: 13px; line-height: 0.7;">'+e.node.total+'/'+total+'</span>' +
             '</div>'
-
-
-            //+'<progress  class="pull-right progress-striped active" '
-            //+'max="'+total+'" value="'+e.node.total+'">'+'</progress><span class="pull-right">('+e.node.total+'/'+total+')</span></div>';
 
         /*var contentStr = '<div class="progress">'
          +'<div class="progress-bar"'
