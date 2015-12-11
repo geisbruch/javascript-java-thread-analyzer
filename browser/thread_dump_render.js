@@ -82,14 +82,22 @@ function makeStack(dump, options) {
         stid++;
         var e = toAdd.shift();
         var hasChildren = e.node.children.length > 0;
-        var content = $("<div>")[0];
-        var bar = $('<div style="padding-left:'+e.level+'em"></div>')[0];
+        var content = $('<div>')[0];
+        var bar = $('<div style="padding-left:'+e.level+'em;margin-bottom: 2px;"></div>')[0];
         $(bar).appendTo(content);
         var contentStr='<div id="'+stid+'" style="background:'+selectBackGroundFromDumpNode(e.node)+';">'
             +(hasChildren? '<a style="padding-right:5px;"'
             +'onclick="javascript:hideOrUnUnhide(this,\'#'+stid+'-children\')"><i class="glyphicon glyphicon-plus-sign"></i></a>':"")
-            +e.node.name+'<progress  class="pull-right progress-striped active" '
-            +'max="'+total+'" value="'+e.node.total+'">'+'</progress>('+e.node.total+'/'+total+')</div>';
+            +e.node.name +
+            '<div class="progress pull-right" style="height: 17px; width: 180px;">' +
+                '<div class="bar" style="width: '+(e.node.total/total*100)+'%; height: 20px"></div>' +
+                '<span style="font-size: 13px; line-height: 0.7;">'+e.node.total+'/'+total+'</span>' +
+            '</div>'
+
+
+            //+'<progress  class="pull-right progress-striped active" '
+            //+'max="'+total+'" value="'+e.node.total+'">'+'</progress><span class="pull-right">('+e.node.total+'/'+total+')</span></div>';
+
         /*var contentStr = '<div class="progress">'
          +'<div class="progress-bar"'
          +'role="progressbar" aria-valuenow="'+e.node.total+'" aria-valuemin="0"'
@@ -164,7 +172,7 @@ function makeStatus(dump, options) {
     str+='<div class="row jstackrow">'
     +'<div class="row jstackrow">'
     +'<div class="col-md-11 jstack"><b>Threads TOTAL</b> </div>'
-    +'<div class="col-md-1" style="text-align: right; padding-right: 3%"><div class="label label-default label-as-badge" style="padding-left: 10px; padding-right: 10px; border-radius: 0em;">'+dump.total_threads+'</div></div>'
+    +'<div class="col-md-1" style="text-align: right; padding-right: 3%"><div class="label label-default label-as-badge" style="padding-left: 10px; padding-right: 10px; border-radius: 0em; width: 35px; display: inline-block;">'+dump.total_threads+'</div></div>'
     +'</div></div><hr style="margin-top:5px;margin-bottom:5px;"/>'
     str+='<div class="row" id="thread_status">'
     for(var i = 0; i<states.length; i++) {
@@ -182,7 +190,7 @@ function makeStatus(dump, options) {
                             '<a>' + k + '</a>' +
                         '</div>' +
                         '<div class="col-md-2" style="text-align: right; padding-right: 9%">' +
-                            '<a><div class="label ' + stateConf.classType + ' label-as-badge" style="padding-left: 10px; padding-right: 10px; border-radius: 0em;">' + st.status[k] + '</div></a>' +
+                            '<a><div class="label ' + stateConf.classType + ' label-as-badge" style="padding-left: 10px; padding-right: 10px; border-radius: 0em; width: 35px; display: inline-block;">' + st.status[k] + '</div></a>' +
                         '</div>' +
                     '</div>'
             }
@@ -194,7 +202,7 @@ function makeStatus(dump, options) {
                     '<a>Threads in <b>' + stateConf.state + '</b></a>' +
                 '</div>' +
                 '<div class="col-md-1">' +
-                    '<a><div class="label ' + stateConf.classType + ' label-as-badge" style="padding-left: 10px; padding-right: 10px; border-radius: 0em;">' + stCount + '</div></a>' +
+                    '<a><div class="label ' + stateConf.classType + ' label-as-badge" style="padding-left: 10px; padding-right: 10px; border-radius: 0em; width: 35px; display: inline-block;">' + stCount + '</div></a>' +
                 '</div>' +
             '</div>' +
             '<div class="row">'+subData+'</div><hr style="margin-top:5px;margin-bottom:5px;"/>';
